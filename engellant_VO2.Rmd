@@ -1,0 +1,58 @@
+---
+title: "engellant_VO2_max_tests"
+author: "Andrew Engellant"
+date: "2024-03-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+A VO2 max test, or maximal oxygen uptake test, is a measure of the maximum amount of oxygen that an individual can utilize during intense exercise. It is considered a gold standard for evaluating an individual's aerobic fitness and cardiovascular endurance. The test involves progressively increasing the intensity of exercise (typically running on a treadmill) while measuring oxygen consumption and heart rate. The maximum volume of oxygen consumed (VO2 max) is measured in milliliters of oxygen consumed per kg of body weight per minute. The higher your VO2 max, the more aerobically fit you are considered to be. 
+
+Descriptions of the variables in this dataset are below. Each observation describes several aspects of the individual participating in the VO2 max test, and their respective score.
+
+**training** - the average intensity of training an individual does on a weekly basis. This category is ranked from 'intense' (an individual who does intense aerobic activity daily) to 'none' (an individual who does no aerobic activity). 
+
+**assigned_sex** - the sex of the individual, either male or female.
+
+**height** - the height of the individual measured in inches.
+
+**weight** - the nude body weight of the individual measured in pounds.
+
+**age** - the age of the individual measured in years.
+
+**max_hr** - the individuals maximum heart rate measured during the VO2 max test.
+
+**VO2_Max** - the individuals score from the VO2 Max test.
+
+A few descriptive statistics are displayed below.
+```{r}
+library(ggplot2)
+
+d <- read.table("engellant_VO2.txt",
+                header = TRUE)
+# Summary of continuous variables
+summary(d[,4:8])
+
+# Correlation for continuous variables
+cor(d[,4:8])
+
+table(d$training, d$assigned_sex)
+
+# Create a scatter plot
+ggplot(d, aes(x = height, y = weight)) +
+  geom_point() +
+  labs(x = "Height", y = "Weight", title = "Height vs. Weight Scatter Plot")
+
+ggplot(d, aes(x = age, y = VO2_Max, col = assigned_sex)) +
+  geom_point() +
+  labs(x = "Age", y = "VO2 Max", title = "Age vs VO2 Max Scatter Plot")
+
+ggplot(d, aes(x = weight, y = VO2_Max, col = training)) +
+  geom_point() +
+  labs(x = "Weight", y = "VO2 Max", title = "Weight vs VO2 Max Scatter Plot")
+```
+
+
